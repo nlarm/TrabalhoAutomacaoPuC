@@ -1,6 +1,11 @@
 import { Locator, Page } from '@playwright/test';
 
 export class AccountPage {
+    public readonly userFirstName: string;
+    public readonly userLastName: string;
+    public readonly userEmail: string;
+    public readonly passwordFillout: string;
+
     private readonly page: Page;
     private readonly firstName: string;
     private readonly lastName: string;
@@ -8,8 +13,13 @@ export class AccountPage {
     private readonly password: string;
     private readonly confirmPassword: string;
     private readonly actionSubmit: string;
-    private readonly url: string;
-    public readonly passwordFillout: string;
+    private readonly urlCreateAccount: string;
+    private readonly errorMessage: string;
+    private readonly successMessage: string;
+    private readonly passwordErrorConfimation: string;
+    private readonly messageAccountExist: string;
+    private readonly messageNewAccount: string;
+    private readonly messageSamePassowrd: string;
     
     constructor(page: Page) {
       this.page = page;
@@ -19,12 +29,21 @@ export class AccountPage {
       this.password = 'id=password';
       this.confirmPassword = 'id=password-confirmation';
       this.actionSubmit = '.action.submit.primary';
-      this.url = 'https://magento.softwaretestingboard.com/customer/account/create/'
-      this.passwordFillout = 'SBTEhMelhorqueAGloboForEv3er'
+      this.urlCreateAccount = 'https://magento.softwaretestingboard.com/customer/account/create/';
+      this.passwordFillout = 'SBTEhMelhorqueAGloboForEv3er';
+      this.errorMessage = ".message-error.error.message";
+      this.successMessage = ".message-success.success.message";
+      this.passwordErrorConfimation = "#password-confirmation-error";
+      this.messageAccountExist = "There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.";
+      this.messageNewAccount = "Thank you for registering with Main Website Store.";
+      this.messageSamePassowrd = "Please enter the same value again.";
+      this.userFirstName = "Galvao"
+      this.userLastName =  "Bueno"
+      this.userEmail =  ""+this.userFirstName+""+this.userLastName+"@globo.com"
     }
   
     async navigateCreatAccount() {
-        await this.page.goto(this.url);
+        await this.page.goto(this.urlCreateAccount);
     }
   
     async fillOutForm(name: string, lastName: string, email: string, password: string, confirmPassword: string) {
@@ -41,50 +60,43 @@ export class AccountPage {
     }
 
     async checkErrorMessage(page) {
-        try {
-            const errorMessageElement = await page.locator('.message-error.error.message');
-            const mensagemEsperada = "Theree is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.";
-            
-            if (!errorMessageElement) {
-                throw new Error('Elemento de mensagem de erro não encontrado');
-            }
-
-            const errorMessageText = await errorMessageElement.textContent();
-            
-            if (!errorMessageText.includes(mensagemEsperada)) {
-                throw new Error(`Mensagem de erro incorreta. Mensagem encontrada: ${errorMessageText}`);
-            }
-
-            return true;
-
-        } catch (error) {
-
-            console.error('Ocorreu um erro durante a verificação da mensagem de erro:', error);
-            return false;
-        }
+        return await this.validMessage(page, this.errorMessage, this.messageAccountExist)
     }
 
     async checkSuccessMessage(page) {
+        return await this.validMessage(page, this.successMessage, this.messageNewAccount)  
+    }
+
+    async checkPasswordError(page) {
+        return await this.validMessage(page, this.passwordErrorConfimation, this.messageSamePassowrd)
+    }
+
+    private async validMessage(page, messageElementIn: string, mensagemEsperadaIn: string) {
         try {
-            const errorMessageElement = await page.locator('.message-success.success.message');
-            const mensagemEsperada = "Thank you for registering with Main Website Store.";
+            const messageElement = await page.locator(messageElementIn);
+            const mensagemEsperada = mensagemEsperadaIn;
             
-            if (!errorMessageElement) {
-                throw new Error('Elemento de mensagem de sucesso não encontrado');
+            if (!messageElement) {
+                throw new Error('Elemento não encontrado');
             }
 
-            const errorMessageText = await errorMessageElement.textContent();
+            const messageText = await messageElement.textContent();
             
-            if (!errorMessageText.includes(mensagemEsperada)) {
-                throw new Error(`Mensagem de sucesso incorreta. Mensagem encontrada: ${errorMessageText}`);
+            if (!messageText.includes(mensagemEsperada)) {
+                throw new Error(`Mensagem incorreta. Mensagem encontrada: ${messageText}`);
             }
 
-            return true;
+            return true
 
         } catch (error) {
 
-            console.error('Ocorreu um erro durante a verificação da mensagem de sucesso:', error);
+            console.error('Ocorreu um erro durante a verificação de elemento e mensagem:', error);
             return false;
         }
     }
 }
+
+function expect(errorMessageText: any) {
+    throw new Error('Function not implemented.');
+}
+
