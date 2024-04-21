@@ -23,9 +23,23 @@ test('Creating an existing account', async ({page}) => {
 
     const accountPage = new AccountPage(page);
 
-    await accountPage.navigate("https://magento.softwaretestingboard.com/customer/account/create/")
-    await accountPage.fillOutForm("Galvao","Bueno","galvaoBueno@globo.com","SBTEhMelhorqueAGloboForEv3er","SBTEhMelhorqueAGloboForEv3er")
+    await accountPage.navigateCreatAccount()
+    await accountPage.fillOutForm("Galvao","Bueno","galvaoBueno@globo.com", accountPage.passwordFillout,accountPage.passwordFillout)
     await accountPage.clickSubmit()
-    await expect(accountPage.checkErrorMessage()).toBeTruthy();
     
+    const result = await accountPage.checkErrorMessage(page);
+    expect(result).toBeTruthy();
+});
+
+test('Creating a new account', async ({page}) => {
+
+    const accountPage = new AccountPage(page);
+    const nomeDate = `Galvao_${Date.now()}`;
+
+    await accountPage.navigateCreatAccount()
+    await accountPage.fillOutForm(nomeDate,"Bueno",nomeDate+"Bueno@globo.com",accountPage.passwordFillout,accountPage.passwordFillout)
+    await accountPage.clickSubmit()
+
+    const result = await accountPage.checkSuccessMessage(page);
+    expect(result).toBeTruthy();
 });
