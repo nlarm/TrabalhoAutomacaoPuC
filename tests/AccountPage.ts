@@ -42,7 +42,7 @@ export class AccountPage {
       this.messageAccountExist = "There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.";
       this.messageNewAccount = "Thank you for registering with Main Website Store.";
       this.messageSamePassowrd = "Please enter the same value again.";
-      this.messageWeakPassword = "Minimum1 of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters.";
+      this.messageWeakPassword = "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters.";
       this.userFirstName = "Galvao"
       this.userLastName =  "Bueno"
       this.userEmail =  ""+this.userFirstName+""+this.userLastName+"@globo.com"
