@@ -26,7 +26,7 @@ test('Creating an existing account', async ({page}) => {
     await accountPage.navigateCreatAccount()
     await accountPage.fillOutForm(accountPage.userFirstName,accountPage.userLastName,accountPage.userEmail, accountPage.passwordFillout,accountPage.passwordFillout)
     await accountPage.clickSubmit()
-    
+
     const result = await accountPage.checkErrorMessage(page);
     expect(result).toBeTruthy();
 });
@@ -51,9 +51,23 @@ test('Check password is the same', async ({page}) => {
     const wrongPassword = "MentiraAGloboEhMelhor"
 
     await accountPage.navigateCreatAccount()
-    await accountPage.fillOutForm(nomeDate,accountPage.userLastName,nomeDate+accountPage.userEmail,accountPage.passwordFillout,wrongPassword)
+    await accountPage.fillOutForm(nomeDate,accountPage.userLastName, nomeDate+accountPage.userEmail, accountPage.passwordFillout,wrongPassword)
     await accountPage.clickSubmit()
 
     const result = await accountPage.checkPasswordError(page);
     expect(result).toBeTruthy();
 });
+
+test('Weak password', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm(accountPage.userFirstName, accountPage.userLastName, accountPage.userEmail, accountPage.weakPassword1234, accountPage.weakPassword1234)
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkWeakPassword(page);
+  expect(result).toBeTruthy();
+});
+
+
