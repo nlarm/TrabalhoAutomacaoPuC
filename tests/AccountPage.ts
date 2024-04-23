@@ -5,6 +5,8 @@ export class AccountPage {
     public readonly userLastName: string;
     public readonly userEmail: string;
     public readonly passwordFillout: string;
+    public readonly weakPassword1234: string;
+
 
     private readonly page: Page;
     private readonly firstName: string;
@@ -20,6 +22,8 @@ export class AccountPage {
     private readonly messageAccountExist: string;
     private readonly messageNewAccount: string;
     private readonly messageSamePassowrd: string;
+    private readonly idPasswordError: string;
+    private readonly messageWeakPassword: string;
     
     constructor(page: Page) {
       this.page = page;
@@ -28,6 +32,7 @@ export class AccountPage {
       this.email = 'id=email_address';
       this.password = 'id=password';
       this.confirmPassword = 'id=password-confirmation';
+      this.idPasswordError = 'id=password-error'
       this.actionSubmit = '.action.submit.primary';
       this.urlCreateAccount = 'https://magento.softwaretestingboard.com/customer/account/create/';
       this.passwordFillout = 'SBTEhMelhorqueAGloboForEv3er';
@@ -37,9 +42,11 @@ export class AccountPage {
       this.messageAccountExist = "There is already an account with this email address. If you are sure that it is your email address, click here to get your password and access your account.";
       this.messageNewAccount = "Thank you for registering with Main Website Store.";
       this.messageSamePassowrd = "Please enter the same value again.";
+      this.messageWeakPassword = "Minimum1 of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters.";
       this.userFirstName = "Galvao"
       this.userLastName =  "Bueno"
       this.userEmail =  ""+this.userFirstName+""+this.userLastName+"@globo.com"
+      this.weakPassword1234 = "12345678"
     }
   
     async navigateCreatAccount() {
@@ -71,6 +78,10 @@ export class AccountPage {
         return await this.validMessage(page, this.passwordErrorConfimation, this.messageSamePassowrd)
     }
 
+    async checkWeakPassword (page) {
+        return await this.validMessage(page, this.idPasswordError, this.messageWeakPassword)
+    }
+
     private async validMessage(page, messageElementIn: string, mensagemEsperadaIn: string) {
         try {
             const messageElement = await page.locator(messageElementIn);
@@ -89,7 +100,6 @@ export class AccountPage {
             return true
 
         } catch (error) {
-
             console.error('Ocorreu um erro durante a verificação de elemento e mensagem:', error);
             return false;
         }
