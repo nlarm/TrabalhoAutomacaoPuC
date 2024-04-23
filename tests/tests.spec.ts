@@ -69,3 +69,4 @@ test('Weak password', async ({page}) => {
   const result = await accountPage.checkWeakPassword(page);
   expect(result).toBeTruthy();
 });
+//teste daniel
