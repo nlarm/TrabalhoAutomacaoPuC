@@ -45,7 +45,7 @@ test('Creating a new account', async ({page}) => {
 });
 
 test('Check password is the same', async ({page}) => {
-
+  
     const accountPage = new AccountPage(page);
     const nomeDate = `Galvao_${Date.now()}_`;
     const wrongPassword = "MentiraAGloboEhMelhor"
@@ -69,5 +69,3 @@ test('Weak password', async ({page}) => {
   const result = await accountPage.checkWeakPassword(page);
   expect(result).toBeTruthy();
 });
-
-

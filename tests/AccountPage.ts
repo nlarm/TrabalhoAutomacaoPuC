@@ -7,6 +7,7 @@ export class AccountPage {
     public readonly passwordFillout: string;
     public readonly weakPassword1234: string;
 
+
     private readonly page: Page;
     private readonly firstName: string;
     private readonly lastName: string;
