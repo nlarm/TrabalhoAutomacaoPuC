@@ -24,7 +24,8 @@ export class AccountPage {
     private readonly messageSamePassowrd: string;
     private readonly idPasswordError: string;
     private readonly messageWeakPassword: string;
-    
+    private readonly urlPrincipal: string;
+
     constructor(page: Page) {
       this.page = page;
       this.firstName = 'First Name';
@@ -47,12 +48,18 @@ export class AccountPage {
       this.userLastName =  "Bueno"
       this.userEmail =  ""+this.userFirstName+""+this.userLastName+"@globo.com"
       this.weakPassword1234 = "12345678"
+      this.urlPrincipal = 'https://magento.softwaretestingboard.com/';
     }
   
+   async abrirSite() {
+    await this.page.goto(this.urlPrincipal);
+   }
+   
     async navigateCreatAccount() {
         await this.page.goto(this.urlCreateAccount);
     }
   
+
     async fillOutForm(name: string, lastName: string, email: string, password: string, confirmPassword: string) {
         await this.page.getByLabel(this.firstName).fill(name);
         await this.page.getByLabel(this.lastName).fill(lastName);
