@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { AccountPage } from './AccountPage';
+import { mainPage } from './mainPage';
 
 test('conferir botão shop new yoga', async ({ page }) => {
-  const accountPage = new AccountPage(page) ;
+  const accountPage = new mainPage(page) ;
   await accountPage.abrirSite();
   const botaoshop = await page.locator('[class="action more button"]').textContent();
   expect(botaoshop).toEqual('Shop New Yoga');
 });
 
 test('Verificar título da página', async ({ page }) => {
-  const accountPage = new AccountPage(page) ;
+  const accountPage = new mainPage(page) ;
   await accountPage.abrirSite();
   const titulo = await page.locator('h1').innerText();
   expect(titulo).toEqual('What\'s New');
