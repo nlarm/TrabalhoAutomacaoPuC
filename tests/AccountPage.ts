@@ -23,6 +23,15 @@ export class AccountPage {
     private readonly messageSamePassowrd: string;
     private readonly idPasswordError: string;
     private readonly messageWeakPassword: string;
+    private readonly missingFirstName: string;
+    private readonly missingLastName: string;
+    private readonly missingEmail: string;
+    private readonly missingPassword: string;
+    private readonly missingConfirmPassword: string;
+    private readonly missingFieldMessage: string;
+    private readonly passwordStrnghtMeterLabel: string;
+    private readonly veryStrongPassword: string;
+    private readonly mediumPassword: string;
 
     constructor(page: Page) {
       this.page = page;
@@ -42,10 +51,19 @@ export class AccountPage {
       this.messageNewAccount = "Thank you for registering with Main Website Store.";
       this.messageSamePassowrd = "Please enter the same value again.";
       this.messageWeakPassword = "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters.";
-      this.userFirstName = "Galvao"
-      this.userLastName =  "Bueno"
-      this.userEmail =  ""+this.userFirstName+""+this.userLastName+"@globo.com"
-      this.weakPassword1234 = "12345678"
+      this.userFirstName = "Galvao";
+      this.userLastName =  "Bueno";
+      this.userEmail =  ""+this.userFirstName+""+this.userLastName+"@globo.com";
+      this.weakPassword1234 = "12345678";
+      this.missingFirstName = 'id=firstname-error';
+      this.missingLastName = 'id=lastname-error';
+      this.missingEmail = 'id=email_address-error';
+      this.missingPassword = 'id=password-error';
+      this.missingConfirmPassword = 'id=password-confirmation-error';
+      this.missingFieldMessage = "This is a required field.";
+      this.passwordStrnghtMeterLabel = 'id=password-strength-meter-label';
+      this.veryStrongPassword = 'Very Strong';  
+      this.mediumPassword = 'Medium';
     }
   
     async navigateCreatAccount() {
@@ -79,6 +97,34 @@ export class AccountPage {
 
     async checkWeakPassword (page) {
         return await this.validMessage(page, this.idPasswordError, this.messageWeakPassword)
+    }
+
+    async checkMissingFirstName (page) {
+        return await this.validMessage(page, this.missingFirstName, this.missingFieldMessage)
+    }
+
+    async checkMissingLastName (page) {
+        return await this.validMessage(page, this.missingLastName, this.missingFieldMessage)
+    }
+
+    async checkMissingEmail (page) {
+        return await this.validMessage(page, this.missingEmail, this.missingFieldMessage)
+    }
+
+    async checkMissingPassword (page) {
+        return await this.validMessage(page, this.missingPassword, this.missingFieldMessage)
+    }
+
+    async checkMissingConfirmPassword (page) {
+        return await this.validMessage(page, this.missingConfirmPassword, this.missingFieldMessage)
+    }
+
+    async checkPasswordVeryStrong (page) {
+        return await this.validMessage(page, this.passwordStrnghtMeterLabel, this.veryStrongPassword)
+    }
+
+    async checkPasswordMedium (page) {
+        return await this.validMessage(page, this.passwordStrnghtMeterLabel, this.mediumPassword)
     }
 
     private async validMessage(page, messageElementIn: string, mensagemEsperadaIn: string) {

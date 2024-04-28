@@ -10,7 +10,7 @@ test('conferir botão shop new yoga', async ({ page }) => {
   expect(botaoshop).toEqual('Shop New Yoga');
 });
 
-test('Verificar título da página', async ({ page }) => {
+test('Verificar título da página', async ({ page }) => { 
   const mainPage = new MainPage(page);
   await mainPage.abrirSite();
 
@@ -76,4 +76,107 @@ test('Weak password', async ({page}) => {
   const result = await accountPage.checkWeakPassword(page);
   expect(result).toBeTruthy();
 });
-//teste daniel
+
+test('Missing field First Name', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm("", accountPage.userLastName, accountPage.userEmail, accountPage.passwordFillout, accountPage.passwordFillout)
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkMissingFirstName(page);
+  expect(result).toBeTruthy();
+});
+
+test('Missing field Last Name', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm(accountPage.userFirstName, "", accountPage.userEmail, accountPage.passwordFillout, accountPage.passwordFillout)
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkMissingLastName(page);
+  expect(result).toBeTruthy();
+});
+
+test('Missing field email', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm(accountPage.userFirstName, accountPage.userLastName, "", accountPage.passwordFillout, accountPage.passwordFillout)
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkMissingEmail(page);
+  expect(result).toBeTruthy();
+});
+
+test('Missing field password', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm(accountPage.userFirstName, accountPage.userLastName, accountPage.userEmail, "", accountPage.passwordFillout)
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkMissingPassword(page);
+  expect(result).toBeTruthy();
+});
+
+test('Missing field confirm password', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm(accountPage.userFirstName, accountPage.userLastName, accountPage.userEmail, accountPage.passwordFillout, "")
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkMissingConfirmPassword(page);
+  expect(result).toBeTruthy();
+});
+
+test('Missing all fields', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.clickSubmit();
+
+  var result = await accountPage.checkMissingFirstName(page);
+  expect(result).toBeTruthy();
+  result = await accountPage.checkMissingLastName(page);
+  expect(result).toBeTruthy();
+  result = await accountPage.checkMissingEmail(page);
+  expect(result).toBeTruthy();
+  result = await accountPage.checkMissingPassword(page);
+  expect(result).toBeTruthy();
+  result = await accountPage.checkMissingConfirmPassword(page);
+  expect(result).toBeTruthy();
+});
+
+test('Password is very strong', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm(accountPage.userFirstName, accountPage.userLastName, accountPage.userEmail, accountPage.passwordFillout, "")
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkPasswordVeryStrong(page);
+  expect(result).toBeTruthy();
+});
+
+test('Password is medium', async ({page}) => {
+
+  const accountPage = new AccountPage(page);
+  const mediumPassword = 'asd123AS' 
+
+  await accountPage.navigateCreatAccount();
+  await accountPage.fillOutForm(accountPage.userFirstName, accountPage.userLastName, accountPage.userEmail, mediumPassword, "")
+  await accountPage.clickSubmit();
+
+  const result = await accountPage.checkPasswordMedium(page);
+  expect(result).toBeTruthy();
+});
