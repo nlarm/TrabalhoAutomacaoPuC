@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { AccountPage } from './AccountPage';
-import { MainPage } from './MainPage';
+import { MainPage } from './mainPage';
 
 test('conferir botão shop new yoga', async ({ page }) => {
   const mainPage = new MainPage(page);
@@ -10,7 +10,7 @@ test('conferir botão shop new yoga', async ({ page }) => {
   expect(botaoshop).toEqual('Shop New Yoga');
 });
 
-test('Verificar título da página', async ({ page }) => { 
+test('Verificar título da página', async ({ page }) => {
   const mainPage = new MainPage(page);
   await mainPage.abrirSite();
 
@@ -44,7 +44,7 @@ test('Creating a new account', async ({page}) => {
     const nomeDate = `Galvao_${Date.now()}_`;
 
     await accountPage.navigateCreatAccount()
-    await accountPage.fillOutForm(nomeDate,accountPage.userLastName,nomeDate+accountPage.userEmail,accountPage.passwordFillout,accountPage.passwordFillout)
+    await accountPage.fillOutForm(nomeDate,accountPage.userLastName,nomeDate+accountPage.userEmail,accountPage.passwordFillout, accountPage.passwordFillout)
     await accountPage.clickSubmit()
 
     const result = await accountPage.checkSuccessMessage(page);
@@ -58,7 +58,7 @@ test('Check password is the same', async ({page}) => {
     const wrongPassword = "MentiraAGloboEhMelhor"
 
     await accountPage.navigateCreatAccount()
-    await accountPage.fillOutForm(nomeDate,accountPage.userLastName, nomeDate+accountPage.userEmail, accountPage.passwordFillout,wrongPassword)
+    await accountPage.fillOutForm(nomeDate,accountPage.userLastName, nomeDate+accountPage.userEmail, accountPage.passwordFillout, wrongPassword)
     await accountPage.clickSubmit()
 
     const result = await accountPage.checkPasswordError(page);

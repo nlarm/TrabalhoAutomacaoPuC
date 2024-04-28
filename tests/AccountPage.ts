@@ -142,7 +142,7 @@ export class AccountPage {
                 throw new Error(`Mensagem incorreta. Mensagem encontrada: ${messageText}`);
             }
 
-            return true
+            return true;
 
         } catch (error) {
             console.error('Ocorreu um erro durante a verificação de elemento e mensagem:', error);
