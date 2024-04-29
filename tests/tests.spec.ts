@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { AccountPage } from './AccountPage';
 import { MainPage } from './mainPage';
+import { WhatIsNewsPage } from './WhatIsNewsPage';
 
 test('conferir botão shop new yoga', async ({ page }) => {
   const mainPage = new MainPage(page);
@@ -11,8 +12,8 @@ test('conferir botão shop new yoga', async ({ page }) => {
 });
 
 test('Verificar título da página', async ({ page }) => {
-  const mainPage = new MainPage(page);
-  await mainPage.abrirSite();
+  const whatIsNewsPage = new WhatIsNewsPage(page);
+  await whatIsNewsPage.whatIsNew();
 
   const titulo = await page.locator('h1').innerText();
   expect(titulo).toEqual('What\'s New');
